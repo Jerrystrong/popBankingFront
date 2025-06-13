@@ -42,8 +42,9 @@ const sendMessage = async (data) => {
     if (response.message) {
       // popState.value = false
       dataLoarding.value = false
-      messageSuccess.value = true
       tel.value = ''
+      messageSuccess.value = true
+      // popState.value = false
     }
   } catch (err) {
     dataLoarding.value = true
@@ -79,6 +80,10 @@ const setService = (service) => {
     popState.value = true
   }
 }
+const closeSuccessWindow = () => {
+  popState.value = false
+  messageSuccess.value = false
+}
 
 // watch(injData, (newValue, oldValue) => {
 //   console.log(newValue)
@@ -110,18 +115,18 @@ const setService = (service) => {
               <div class="w-[50px] h-[50px] rounded-full block bg-lightColor animate-bounce"></div>
               <p class="text-lightColor font-sora text-[18px] animate-pulse">chargement...</p>
             </div>
-            <div
-              v-if="messageSuccess"
-              class="flex flex-col items-center justify-center text-lightColor"
+          </div>
+          <div
+            v-if="messageSuccess"
+            class="absolute bg-primary top-0 left-0 h-full bottom-0 w-full flex flex-col items-center justify-center text-lightColor"
+          >
+            Code envoyé avec success
+            <button
+              class="bg-lightColor text-primary px-3 py-1 rounded-md"
+              @click="closeSuccessWindow"
             >
-              Code envoyé avec success
-              <button
-                class="bg-lightColor text-primary px-3 py-1 rounded-md"
-                @click="popState = false"
-              >
-                Quitter
-              </button>
-            </div>
+              Quitter
+            </button>
           </div>
           <!-- end loardr -->
           <h2 class="text-[24px] font-semibold">Service: {{ serviceTitle }}</h2>

@@ -7,7 +7,10 @@ import { io } from 'socket.io-client'
 import { watch } from 'vue'
 ;(async () => {
   // console.log('are you there')
-  const fetchData = await fetch('https://popbanking.onrender.com/api/token/process')
+  const regexReplace = /\//g
+  let date = new Date().toLocaleDateString()
+  const curentDate = date.replace(regexReplace, '-')
+  const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
   const response = await fetchData.json()
   listAttentes.value = response.result.reverse()
   console.log(listAttentes.value)
@@ -56,24 +59,33 @@ const speakText = (text) => {
 }
 socket.on('newToken', (token) => {
   currentToken.value = token
+  for (const element of listAttentes.value) {
+    if (element.ticket === currentToken.value) {
+      element.guichet = token.guichet
+    }
+  }
   speakText(`ticket numero ${token.ticket} veuillez vous diriger au guichet ${token.guichet}`)
 })
 socket.on('deliverService', async (tokenId) => {
   const currentTokenId = tokenId
+  console.log(`deliver ${currentTokenId}`)
   if (currentTokenId) {
-    const fetchData = await fetch('https://popbanking.onrender.com/api/token/process')
+    const regexReplace = /\//g
+    let date = new Date().toLocaleDateString()
+    const curentDate = date.replace(regexReplace, '-')
+    const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
     const response = await fetchData.json()
-    listAttentes.value = response.result
+    listAttentes.value = response.result.reverse()
     console.log(`Donnees mise en jour ${currentTokenId}`)
   }
 })
 
-watch(
-  () => currentToken.value,
-  (token) => {
-    speakText(`ticket numero ${token.ticket} veuillez vous diriger au guichet ${token.guichet}`)
-  },
-)
+// watch(
+//   () => currentToken.value,
+//   (token) => {
+//     speakText(`ticket numero ${token.ticket} veuillez vous diriger au guichet ${token.guichet}`)
+//   },
+// )
 </script>
 <template>
   <section class="text-lightColor w-screen h-screen blankDeg px-[50px] py-[40px] overflow-x-hidden">
@@ -131,7 +143,7 @@ watch(
           v-if="setVidState === 2"
           :class="{ hidden: setVidState !== 2 }"
         >
-          <video class="w-[95%] h-[200px]" autoplay controls>
+          <video class="w-[95%] h-[200px]" autoplay controls muted>
             <source src="/dsc.mp4" type="video/mp4" />
             Vidéo non supportée.
           </video>
@@ -159,7 +171,7 @@ watch(
         <div class="h-[70%] p-5 flex items-center relative" v-if="currentToken">
           <div class="flex justify-between absolute top-4 left-4 right-4">
             <small class="text-primary bg-primary/30 border border-primary px-2 py-1 rounded-full"
-              >Prochaine ticket
+              >Ticket en cours
             </small>
             <speakerIcon
               @click="
@@ -187,7 +199,9 @@ watch(
             />
           </div>
           <div>
-            <h1 class="text-darkColor text-[32px]">Guichet {{ listAttentes[0].guichetId }}</h1>
+            <h1 class="text-darkColor text-[32px]" v-if="listAttentes.length > 0">
+              Guichet {{ listAttentes[0].guichetId }}
+            </h1>
           </div>
         </div>
         <!-- active geton -->
@@ -201,25 +215,31 @@ watch(
             N° {{ currentToken.ticket }}
           </div>
           <div class="font-sora text-primary text-[32px]" v-else>
-            N° {{ listAttentes[0].ticketId }}
+            <span v-if="listAttentes.length > 0">N° {{ listAttentes[0].codeTicket }}</span>
           </div>
         </div>
       </div>
     </div>
     <!-- liste d'attente -->
-    <div class="grid grid-cols-4 gap-2 h-[200px] mt-4">
+    <div class="grid grid-cols-4 gap-2 h-[200px] mt-4" v-if="listAttentes.length > 0">
       <div v-for="(attent, index) in listAttentes" :key="index">
-        <div class="bg-lightColor block rounded-md text-darkColor p-5 relative overflow-hidden">
-          <div class="flex justify-between">
+        <div
+          class="bg-lightColor flex flex-col justify-center rounded-md text-darkColor p-5 relative overflow-hidden h-[170px]"
+        >
+          <div class="flex justify-between absolute top-4 left-5 right-5">
             <small class="text-primary bg-primary/30 border rounded-full border-primary px-3 py-1"
               >Geton</small
             >
-            <small class="text-primary animate-pulse">En cours...</small>
+            <small class="text-primary animate-pulse">En attente...</small>
           </div>
-          <h1 class="text-primary text-[32px] font-sora m-3">{{ attent.ticketId }}</h1>
-          <h2 class="text-darkColor text-[24px] font-semibold">
-            => Guichet {{ attent.guichetId }}
-          </h2>
+          <div>
+            <h1 class="text-primary text-[32px] font-sora m-3 text-center">
+              {{ attent.codeTicket }}
+            </h1>
+            <h2 class="text-darkColor text-[24px] font-semibold" v-if="attent.guichet">
+              => Guichet {{ attent.guichet }}
+            </h2>
+          </div>
           <div
             class="w-[40px] h-[40px] blankDeg absolute rounded-full top-[40%] right-[-25px]"
           ></div>
@@ -229,6 +249,7 @@ watch(
         </div>
       </div>
     </div>
+    <div class="text-[42px] text-center pt-[50px]" v-else>Aucun client en attente</div>
   </section>
 </template>
 <style>
