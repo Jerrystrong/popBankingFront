@@ -7,8 +7,7 @@ const router = useRouter()
 const historiques = ref([])
 const loarding = ref(false)
 const fetchHistoriqueDay = async () => {
-  let currentDay = new Date().toLocaleDateString
-  console.log(new Date().toLocaleDateString())
+  let currentDay = new Date().toLocaleDateString()
   const regexReplace = /\//g
   currentDay = currentDay.replace(regexReplace, '-')
   try {
@@ -27,9 +26,8 @@ const fetchHistoriqueDay = async () => {
 }
 fetchHistoriqueDay()
 onMounted(async () => {
-  // console.log('sasas')
+  console.log('sasas')
   const response = await axios.get('https://popbanking.onrender.com/api/help/get-applies')
-  // console.log('sasas')
   console.log(response)
 })
 const goBack = () => {
