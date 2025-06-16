@@ -59,20 +59,22 @@ const speakText = (text) => {
 }
 socket.on('newToken', async (token) => {
   currentToken.value = token
+  console.log('****************************')
   for (const element of listAttentes.value) {
     if (element.ticket === currentToken.value) {
       element.guichet = token.guichet
     }
   }
-  speakText(`ticket numero ${token.ticket} veuillez vous diriger au guichet ${token.guichet}`)
   const regexReplace = /\//g
   let date = new Date().toLocaleDateString()
   const curentDate = date.replace(regexReplace, '-')
+  console.log(curentDate)
   const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
   const response = await fetchData.json()
   listAttentes.value = response.result.reverse()
   console.log(`mise en cours `)
   console.log(listAttentes.value)
+  speakText(`ticket numero ${token.ticket} veuillez vous diriger au guichet ${token.guichet}`)
 })
 socket.on('deliverService', async (tokenId) => {
   const currentTokenId = tokenId
