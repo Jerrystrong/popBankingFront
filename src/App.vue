@@ -105,7 +105,7 @@ watch(
 )
 </script>
 
-<template v-touch:swipe.right="OpenParam">
+<template>
   <!-- parameter -->
   <transition name="fadeLeft">
     <ParameterComponent
