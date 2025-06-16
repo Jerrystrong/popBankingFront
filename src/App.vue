@@ -122,7 +122,7 @@ watch(
     <NavComponent />
   </header>
 
-  <RouterView />
+  <RouterView @open-param="OpenParam" />
   <ToggleNavComponent @open-param="OpenParam" v-if="mobileOnly" />
 </template>
 

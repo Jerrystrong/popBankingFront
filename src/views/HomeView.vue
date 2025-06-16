@@ -84,6 +84,8 @@ const closeSuccessWindow = () => {
   popState.value = false
   messageSuccess.value = false
 }
+const emits = defineEmits(['openParam'])
+emits('openParam', true)
 
 // watch(injData, (newValue, oldValue) => {
 //   console.log(newValue)
@@ -92,7 +94,7 @@ const closeSuccessWindow = () => {
 </script>
 
 <template>
-  <section class="relative">
+  <section class="relative" v-touch:swipe.right="openParam">
     <!-- popup ticket -->
     <div
       class="bg-darkColor/30 fixed top-0 bottom-0 right-0 left-0 w-full z-50 flex items-center justify-center"
