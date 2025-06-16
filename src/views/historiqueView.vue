@@ -32,6 +32,8 @@ onMounted(async () => {
   const response = await axios.get('https://popbanking.onrender.com/api/help/get-applies')
   console.log('sasas')
   console.log(response)
+  // ----------------------
+  fetchHistoriqueDay()
 })
 const goBack = () => {
   router.go(-1)

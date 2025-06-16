@@ -3,8 +3,8 @@ import { RouterLink, RouterView, useRoute } from 'vue-router'
 import NavComponent from './components/icons/navComponent.vue'
 import ToggleNavComponent from './components/icons/toggleNavComponent.vue'
 import ParameterComponent from './components/parameterComponent.vue'
-import { allServices } from '../composable/service'
-import { provide, ref, watch } from 'vue'
+// import { allServices } from '../composable/service'
+import { onMounted, provide, ref, watch } from 'vue'
 const services = ref([])
 // const emits=defineEmits(['pushService'])
 // services.value = [...allServices]
@@ -24,12 +24,12 @@ const fetchService = async () => {
 }
 if (!localStorage.getItem('services')) {
   fetchService()
-  // console.log(servicesA)
-  // if (servicesA.value > 0) {
-  //   console.log(servicesA.value)
-  // }
-  // localStorage.setItem('services', JSON.stringify([...allServices]))
 }
+onMounted(() => {
+  if (!localStorage.getItem('services')) {
+    fetchService()
+  }
+})
 services.value = JSON.parse(localStorage.getItem('services'))
 const paramState = ref(false)
 const closeParam = (d) => {
