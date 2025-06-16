@@ -71,6 +71,8 @@ socket.on('newToken', async (token) => {
   const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
   const response = await fetchData.json()
   listAttentes.value = response.result.reverse()
+  console.log(`mise en cours `)
+  console.log(listAttentes.value)
 })
 socket.on('deliverService', async (tokenId) => {
   const currentTokenId = tokenId
