@@ -57,7 +57,7 @@ const speakText = (text) => {
     alert('La synthèse vocale n’est pas supportée par ce navigateur.')
   }
 }
-socket.on('newToken', (token) => {
+socket.on('newToken', async (token) => {
   currentToken.value = token
   for (const element of listAttentes.value) {
     if (element.ticket === currentToken.value) {
@@ -65,6 +65,12 @@ socket.on('newToken', (token) => {
     }
   }
   speakText(`ticket numero ${token.ticket} veuillez vous diriger au guichet ${token.guichet}`)
+  const regexReplace = /\//g
+  let date = new Date().toLocaleDateString()
+  const curentDate = date.replace(regexReplace, '-')
+  const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
+  const response = await fetchData.json()
+  listAttentes.value = response.result.reverse()
 })
 socket.on('deliverService', async (tokenId) => {
   const currentTokenId = tokenId
