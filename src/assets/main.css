@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@100..800&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #096b68;
+  --color-darkColor: #0f282e;
+  --color-lightColor: #f0f8fa;
+  --font-sora: 'Sora', sans-serif;
+}
+@layer base {
+  body {
+    @apply bg-lightColor text-darkColor;
+  }
+}
