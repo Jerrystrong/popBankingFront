@@ -35,11 +35,15 @@ const newPub = async () => {
         formData.append('video', video.value) // idem, doit être un File si c’est un fichier
 
         try {
-          const response = await axios.post('http://localhost:3300/api/uploadPub/', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data', // ✅ Bonne valeur ici
+          const response = await axios.post(
+            'https://popbanking.onrender.com/api/uploadPub/',
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data', // ✅ Bonne valeur ici
+              },
             },
-          })
+          )
           console.log(response)
         } catch (err) {
           console.error(err)
