@@ -202,6 +202,7 @@ socket.on('deliverService', async (tokenId) => {
             <h1 class="text-darkColor text-[32px]" v-if="listAttentes.length > 0">
               Guichet {{ listAttentes[0].guichetId }}
             </h1>
+            <h1 v-else>Aucune activité courante</h1>
           </div>
         </div>
         <!-- active geton -->
@@ -216,6 +217,7 @@ socket.on('deliverService', async (tokenId) => {
           </div>
           <div class="font-sora text-primary text-[32px]" v-else>
             <span v-if="listAttentes.length > 0">N° {{ listAttentes[0].codeTicket }}</span>
+            <span v-else>Aucune activité</span>
           </div>
         </div>
       </div>
