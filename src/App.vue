@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView, useRoute } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import NavComponent from './components/icons/navComponent.vue'
 import ToggleNavComponent from './components/icons/toggleNavComponent.vue'
 import ParameterComponent from './components/parameterComponent.vue'
@@ -105,7 +105,7 @@ watch(
 )
 </script>
 
-<template>
+<template v-touch:swipe.right="OpenParam">
   <!-- parameter -->
   <transition name="fadeLeft">
     <ParameterComponent
@@ -122,7 +122,7 @@ watch(
     <NavComponent />
   </header>
 
-  <RouterView @open-param="OpenParam" />
+  <RouterView />
   <ToggleNavComponent @open-param="OpenParam" v-if="mobileOnly" />
 </template>
 
