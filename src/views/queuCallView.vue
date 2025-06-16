@@ -60,11 +60,6 @@ const speakText = (text) => {
 socket.on('newToken', async (token) => {
   currentToken.value = token
   console.log('****************************')
-  for (const element of listAttentes.value) {
-    if (element.ticket === currentToken.value) {
-      element.guichet = token.guichet
-    }
-  }
   const regexReplace = /\//g
   let date = new Date().toLocaleDateString()
   const curentDate = date.replace(regexReplace, '-')
@@ -74,6 +69,13 @@ socket.on('newToken', async (token) => {
   listAttentes.value = response.result.reverse()
   console.log(`mise en cours `)
   console.log(listAttentes.value)
+  for (const element of listAttentes.value) {
+    if (element.ticket === currentToken.value) {
+      element.guichet = token.guichet
+      element.serviceName = token.serviceName
+    }
+  }
+
   speakText(`ticket numero ${token.ticket} veuillez vous diriger au guichet ${token.guichet}`)
 })
 socket.on('deliverService', async (tokenId) => {
