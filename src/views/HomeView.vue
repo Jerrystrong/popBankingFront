@@ -134,11 +134,12 @@ emits('openParam', true)
           <h2 class="text-[24px] font-semibold">Service: {{ serviceTitle }}</h2>
           <div class="border-2 rounded-md border-primary/30 p-2">
             <p class="text-[18px]">Numero</p>
-            <div class="flex items-ceneter gap-1">
+            <div class="flex items-center gap-1">
               <UserIcon class="w-[20px] h-[20px]" />
+              <span class="text-primary">+243</span>
               <input
                 type="tel"
-                placeholder="Entrez le numero du client"
+                placeholder="Numero du client + Enter"
                 class="focus:border-0 hover:border-0 focus:outline-0 hover:outline-0 outline-0 text-primary"
                 v-model="tel"
                 @keyup.enter="pushData"
