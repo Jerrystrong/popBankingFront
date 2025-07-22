@@ -4,7 +4,8 @@ import NavComponent from './components/icons/navComponent.vue'
 import ToggleNavComponent from './components/icons/toggleNavComponent.vue'
 import ParameterComponent from './components/parameterComponent.vue'
 // import { allServices } from '../composable/service'
-import { onMounted, provide, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { useServiceStore } from './stores/service'
 const services = ref([])
 // const emits=defineEmits(['pushService'])
 // services.value = [...allServices]
@@ -83,12 +84,16 @@ const removeService = async (name) => {
     console.log(`Erreur: ${err}`)
   }
 }
+const serviceStorage = useServiceStore()
+serviceStorage.setService(services.value)
 const restartSystem = () => {
   // console.log(localStorage.getItem('services'))
   services.value = JSON.parse(localStorage.getItem('services'))
   paramState.value = false
+  serviceStorage.setService(services.value)
 }
-provide('pushService', services.value)
+// provide('pushService', services.value)
+// remplace provide by pinia
 const mobileOnly = ref(true)
 const route = useRoute()
 console.log(route.path)

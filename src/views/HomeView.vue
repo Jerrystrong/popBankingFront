@@ -3,28 +3,30 @@ import CreateIcon from '@/components/icons/createIcon.vue'
 import CashMoney from '@/components/icons/cashMoney.vue'
 import DepotIcon from '@/components/icons/depotIcon.vue'
 import ComplaintIcon from '@/components/icons/complaintIcon.vue'
-import { inject, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 // import { allServices } from '../../composable/service'
 import UserIcon from '@/components/icons/userIcon.vue'
 import CardIcon from '@/components/icons/cardIcon.vue'
 import CloseIcon from '@/components/icons/closeIcon.vue'
 import OtherServiceIcon from '@/components/icons/otherServiceIcon.vue'
+import { useServiceStore } from '@/stores/service'
 
 // import TheWelcome from '../components/TheWelcome.vue'
 const popState = ref(false)
 const serviceTitle = ref('')
-const services = ref([])
 const serviceValue = ref('')
 const serviceCount = ref(0)
 const tel = ref()
+// const services = ref([])
 const currentService = ref('')
-const injData = inject('pushService')
+// const injData = inject('pushService')
+const serviceStorage = useServiceStore()
+const services = computed(() => serviceStorage.services)
 // services.value = [...allServices]
 // services.value = JSON.parse(localStorage.getItem('services'))
-onMounted(() => {
-  // console.log('mount')
-  services.value = injData
-})
+// services.value = serviceStorage.services
+// console.log(serviceStorage.services)
+// })
 const dataLoarding = ref(false)
 const messageSuccess = ref(false)
 const sendMessage = async (data) => {
