@@ -1,6 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 // if(route.pemission)
@@ -25,11 +24,11 @@ const fetchHistoriqueDay = async () => {
   }
 }
 fetchHistoriqueDay()
-onMounted(async () => {
-  console.log('sasas')
-  const response = await axios.get('https://popbanking.onrender.com/api/help/get-applies')
-  console.log(response)
-})
+// onMounted(async () => {
+//   console.log('sasas')
+//   const response = await axios.get('https://popbanking.onrender.com/api/help/get-applies')
+//   console.log(response)
+// })
 const goBack = () => {
   router.go(-1)
 }

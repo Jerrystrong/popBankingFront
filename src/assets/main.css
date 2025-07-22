@@ -10,7 +10,7 @@
 @layer base {
   body {
     @apply bg-lightColor text-darkColor;
-    /* color:rgb(58, 66, 66) */
+    /* color: rgb(2, 6, 23); */
     /* color: rgb(15, 40, 46); */
   }
 }

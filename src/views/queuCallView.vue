@@ -4,7 +4,7 @@ import speakerIcon from '../components/icons/speakerIcon.vue'
 import locationIcon from '../components/icons/locationIcon.vue'
 import localisationIcon from '../components/icons/localisationIcon.vue'
 import { io } from 'socket.io-client'
-import { watch } from 'vue'
+// import { watch } from 'vue'
 ;(async () => {
   // console.log('are you there')
   const regexReplace = /\//g
