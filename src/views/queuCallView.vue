@@ -13,7 +13,7 @@ import { io } from 'socket.io-client'
   const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
   const response = await fetchData.json()
   listAttentes.value = response.result.reverse()
-  console.log(listAttentes.value)
+  // console.log(listAttentes.value)
 })()
 const socket = io('https://popbanking.onrender.com')
 socket.on('getConnectedClient', (value) => {
@@ -59,16 +59,16 @@ const speakText = (text) => {
 }
 socket.on('newToken', async (token) => {
   currentToken.value = token
-  console.log('****************************')
+  // console.log('****************************')
   const regexReplace = /\//g
   let date = new Date().toLocaleDateString()
   const curentDate = date.replace(regexReplace, '-')
-  console.log(curentDate)
+  // console.log(curentDate)
   const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
   const response = await fetchData.json()
   listAttentes.value = response.result.reverse()
-  console.log(`mise en cours `)
-  console.log(listAttentes.value)
+  // console.log(`mise en cours `)
+  // console.log(listAttentes.value)
   for (const element of listAttentes.value) {
     if (element.ticket === currentToken.value) {
       element.guichet = token.guichet
@@ -80,7 +80,7 @@ socket.on('newToken', async (token) => {
 })
 socket.on('deliverService', async (tokenId) => {
   const currentTokenId = tokenId
-  console.log(`deliver ${currentTokenId}`)
+  // console.log(`deliver ${currentTokenId}`)
   if (currentTokenId) {
     const regexReplace = /\//g
     let date = new Date().toLocaleDateString()
@@ -88,7 +88,7 @@ socket.on('deliverService', async (tokenId) => {
     const fetchData = await fetch(`https://popbanking.onrender.com/api/token/process/${curentDate}`)
     const response = await fetchData.json()
     listAttentes.value = response.result.reverse()
-    console.log(`Donnees mise en jour ${currentTokenId}`)
+    // console.log(`Donnees mise en jour ${currentTokenId}`)
   }
 })
 
@@ -254,6 +254,7 @@ socket.on('deliverService', async (tokenId) => {
               => Guichet {{ attent.guichet }}
             </h2>
           </div>
+          <p class="text-primary/50 text-[14px]">{{ attent.createdAt }}</p>
           <div
             class="w-[40px] h-[40px] blankDeg absolute rounded-full top-[40%] right-[-25px]"
           ></div>
